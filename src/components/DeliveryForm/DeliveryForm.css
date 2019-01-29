@@ -1,0 +1,26 @@
+.DeliveryForm {
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.DeliveryForm h3 {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.DeliveryForm label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.DeliveryForm input {
+  width: 100%;
+}
+
+.DeliveryForm textarea {
+  width: 100%;
+}
+
+.DeliveryForm button {
+  width: 100%;
+}

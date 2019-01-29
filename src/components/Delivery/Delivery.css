@@ -1,0 +1,27 @@
+.Delivery  {
+  margin-bottom: 16px;
+}
+
+.Delivery:last-child {
+  margin: 0;
+}
+
+.Delivery h2 {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.Delivery p {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.Delivery .address {
+  font-weight: bold;
+}
+
+.Delivery .actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
