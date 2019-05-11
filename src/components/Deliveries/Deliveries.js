@@ -4,7 +4,7 @@ import './Deliveries.css'
 
 class Deliveries extends Component {
   render() {
-    return <section>
+    return <section className="Deliveries">
       <h2>Deliveries</h2>
       <ul>
         {

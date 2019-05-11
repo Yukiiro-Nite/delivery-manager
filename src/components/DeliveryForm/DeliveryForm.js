@@ -1,12 +1,33 @@
 import React, {Component} from 'react'
 import {getFormData} from '../../utils'
+import Autocomplete from 'react-google-autocomplete'
+import {GoogleApiWrapper} from 'google-maps-react'
+import secrets from '../../secrets.json'
 import './DeliveryForm.css'
 
 class DeliveryForm extends Component {
+  constructor() {
+    super()
+    this.state = {
+      location: null,
+      address: null
+    }
+  }
+
+  handlePlaceSelected = (place) => {
+    const location = {
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng()
+    }
+    const address = place.formatted_address
+
+    this.setState({location, address})
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
     const data = getFormData(event)
-    this.props.addDelivery(data)
+    this.props.addDelivery({...data, ...this.state})
   }
   render() {
     return (
@@ -18,7 +39,10 @@ class DeliveryForm extends Component {
         </label>
         <label>
           <h3>Address</h3>
-          <input name="address"/>
+          <Autocomplete
+            onPlaceSelected={this.handlePlaceSelected}
+            types={['address']}
+          />
         </label>
         <label>
           <h3>Description</h3>
@@ -30,4 +54,6 @@ class DeliveryForm extends Component {
   }
 }
 
-export {DeliveryForm}
+export default GoogleApiWrapper({
+  apiKey: secrets.googleApiKey
+})(DeliveryForm)
