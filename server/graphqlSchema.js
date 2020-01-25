@@ -1,4 +1,6 @@
 const {
+  parse,
+  printSchema,
   GraphQLObjectType,
   GraphQLList,
   GraphQLNonNull,
@@ -12,7 +14,8 @@ const {
   getCustomersByName,
   getDelivery,
   getDeliveriesByRoute,
-  getRoute
+  getRoute,
+  createCustomer
 } = require('./dataAccesors')
 
 const customerType = new GraphQLObjectType({
@@ -216,8 +219,37 @@ const queryType = new GraphQLObjectType({
   })
 })
 
-module.exports =  new GraphQLSchema({
+const mutationType = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: () => ({
+    createCustomer: {
+      type: customerType,
+      args: {
+        name: {
+          type: GraphQLNonNull(GraphQLString),
+          description: 'The name of the customer'
+        },
+        phoneNumber: {
+          type: GraphQLString,
+          description: 'The phone number of the customer'
+        },
+        email: {
+          type: GraphQLString,
+          description: 'The email of the customer'
+        },
+        address: {
+          type: GraphQLString,
+          description: 'The address of the customer'
+        }
+      },
+      resolve: (root, customerData) => createCustomer(customerData)
+    }
+  })
+})
+
+const schema = new GraphQLSchema({
   query: queryType,
+  mutation: mutationType,
   types: [
     deliveryType,
     routeType,
@@ -225,3 +257,70 @@ module.exports =  new GraphQLSchema({
     userType
   ]
 })
+
+const overrides = {
+  User: {
+    id: 'INTEGER PRIMARY KEY'
+  },
+  Customer: {
+    id: 'INTEGER PRIMARY KEY'
+  },
+  Delivery: {
+    id: 'INTEGER PRIMARY KEY'
+  },
+  Route: {
+    id: 'INTEGER PRIMARY KEY'
+  }
+}
+
+const typeOverrides = {
+  'Int': 'INTEGER',
+  'Float': 'REAL',
+  'String': 'TEXT',
+  'Boolean': 'BLOB'
+}
+
+function getSqliteType(fieldType, {tableName, fieldName}) {
+  const typeOverride = overrides[tableName] && overrides[tableName][fieldName]
+  if(typeOverride) {
+    return typeOverride
+  }
+
+  return getType(fieldType)
+}
+
+function getType(fieldType) {
+  switch(fieldType.kind) {
+    case 'NonNullType':
+      return getType(fieldType.type) + ' NOT NULL'
+    case 'NamedType':
+      return typeOverrides[fieldType.name.value] || ''
+    default:
+      return ''
+  }
+}
+
+function getSqliteSchema() {
+  const definitions = parse(printSchema(schema)).definitions
+  const sqliteSchema = definitions
+    .filter((def) => def.name.value !== 'Query' && def.name.value !== 'Mutation')
+    .map((def) => ({
+      name: def.name.value,
+      args: def.fields.map((field) => ({
+        name: field.name.value,
+        type: getSqliteType(field.type, {
+          tableName: def.name.value,
+          fieldName: field.name.value
+        })
+      })).filter(arg => Boolean(arg.type))
+    }))
+  console.log('Inside of getSqliteSchema: ', sqliteSchema)
+  return sqliteSchema
+}
+
+console.log('outside of getSqliteSchema: ', getSqliteSchema())
+
+module.exports = {
+  schema,
+  sqliteSchema: getSqliteSchema()
+}

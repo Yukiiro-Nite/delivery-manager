@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express-graphql": "^0.8.0",
+    "express-starter": "git+https://github.com/Yukiiro-Nite/express-starter.git",
+    "google-maps-react": "^2.0.2",
+    "graphql": "^14.3.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.3"
+    "react-google-autocomplete": "^1.0.18",
+    "react-scripts": "2.1.3",
+    "sqlite3": "^4.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-server": "node ./server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -21,5 +28,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "homepage": "https://michaelmarlobryant/delivery-manager"
 }
