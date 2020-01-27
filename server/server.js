@@ -1,6 +1,4 @@
 const expressStarter = require('express-starter')
-const expressGraphql = require('express-graphql')
-const graphqlSchema = require('./graphqlSchema')
 const port = process.env.PORT || 3000
 
 expressStarter.start(port,
@@ -9,11 +7,7 @@ expressStarter.start(port,
       console.log(`Request @ ${req.originalUrl}`);
       next();
     });
-    app.use(expressGraphql({
-      schema: graphqlSchema,
-      graphiql: true
-    }))
-    app.use(express.static('public'));
+    app.use(express.static('build'));
   },
   (express, app, io) => {
     // postload

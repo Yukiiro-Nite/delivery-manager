@@ -4,7 +4,12 @@ import DeliveryForm from './components/DeliveryForm/DeliveryForm'
 import DeliveryMap from './components/Map/Map'
 import { Routes } from './components/Routes/Routes'
 import './App.css'
-import { uniqueId } from './utils';
+import { uniqueId } from './utils'
+import setupSocketAuth from './socket-auth'
+import io from 'socket.io-client'
+
+const socket = io()
+setupSocketAuth(socket)
 
 class App extends Component {
   constructor() {

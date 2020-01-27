@@ -1,4 +1,16 @@
+:root {
+  --dark: #16161d;
+  --dark_1: #16161d20;
+  --dark_2: #16161d40;
+  --dark_3: #16161d60;
+  --dark_4: #16161d80;
+  --dark_5: #16161dA0;
+  --dark_6: #16161dC0;
+  --dark_7: #16161dE0;
+}
+
 body {
+  color: var(--dark);
   margin: 0;
   padding: 0;
   font-family: "Arial";

@@ -1,4 +1,6 @@
-const Path = require('path');
+const Path = require('path')
+const { authUser, createToken, getToken, removeToken } = require('../server/auth')
+const { getUser } = require('../server/users')
 
 exports.config = {
   routes: {
@@ -30,14 +32,17 @@ exports.config = {
     // }
   },
   socketEvents: {
-  //   connection() {
-  //     console.log('got a connection from object config!');
-  //   },
-  //   hello(io, socket, msg) {
-  //     socket.emit('hello','hello from an object config!');
-  //   },
-  //   disconnect() {
-  //     console.log('got a disconnection from object config!');
-  //   }
+    connection(io, socket, msg) {
+      console.log(`[${socket.id}] connected`)
+      createToken(socket)
+    },
+    auth(io, socket, token) {
+      console.log(`[${socket.id}] User authorizing as ${token.authId}`)
+      authUser(socket, token)
+    },
+    disconnect(io, socket, msg) {
+      console.log(`[${socket.id}] disconnected`)
+      removeToken(socket)
+    }
   }
-};
+}
