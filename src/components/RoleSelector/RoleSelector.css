@@ -1,3 +1,10 @@
+.RoleSelector__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
 .RoleSelector {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -10,7 +17,6 @@
   padding: 2rem;
   margin-left: auto;
   margin-right: auto;
-  height: 100vh;
 }
 
 .RoleSelector__form {
@@ -20,23 +26,7 @@
 
 .RoleSelector__form button {
   width: 100%;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  border-width: 2px;
   font-size: 1.5rem;
-  background-color: var(--dark_1);
-  transform: scale(1);
-  transition: all 0.2s ease-in-out;
-}
-
-.RoleSelector__form button:hover,
-.RoleSelector__form button:focus {
-  background-color: var(--dark_2);
-}
-
-.RoleSelector__form button:active {
-  background-color: var(--dark_3);
-  transform: scale(0.98);
 }
 
 @media (orientation: landscape) {

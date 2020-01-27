@@ -26,16 +26,16 @@
   font-weight: bold;
 }
 
+.NameSelector__form label span {
+  text-align: center;
+}
+
 .NameSelector__form input {
   margin-top: 2rem;
-  padding: 0.5rem 1rem;
   font-size: 1.5rem;
-  border-radius: 4px;
 }
 
 .NameSelector__form button {
   margin-top: 2rem;
-  padding: 0.5rem 1rem;
   font-size: 1.5rem;
-  border-radius: 4px;
 }
